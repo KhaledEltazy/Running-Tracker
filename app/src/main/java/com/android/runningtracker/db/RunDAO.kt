@@ -11,7 +11,7 @@ import com.android.runningtracker.model.Run
 @Dao
 interface RunDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(run : Run)
+    suspend fun insert(run : Run)
 
     @Delete
     suspend fun delete(run: Run)
