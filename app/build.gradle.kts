@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.android.runningtracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.android.runningtracker"
@@ -112,6 +112,7 @@ dependencies {
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+
     // Views/Fragments integration
     implementation("androidx.navigation:navigation-fragment:$nav_version")
     implementation("androidx.navigation:navigation-ui:$nav_version")
@@ -133,12 +134,13 @@ dependencies {
     //Material Design
     implementation ("com.google.android.material:material:1.3.0-alpha03")
 
+    //Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
-    // Navigation Components
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.3.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.3.0")
+    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0-alpha01")
+
 
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.11.0")
@@ -148,14 +150,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-location:17.0.0")
     implementation ("com.google.android.gms:play-services-maps:17.0.0")
 
-    // Dagger Core
-    implementation ("com.google.dagger:dagger:2.28.1")
-    kapt ("com.google.dagger:dagger-compiler:2.25.2")
-
-    // Dagger Android
-    api ("com.google.dagger:dagger-android:2.28.1")
-    api ("com.google.dagger:dagger-android-support:2.28.1")
-    kapt ("com.google.dagger:dagger-android-processor:2.23.2")
 
     // Easy Permissions
     implementation ("pub.devrel:easypermissions:3.0.0")
@@ -164,9 +158,10 @@ dependencies {
     implementation ("com.jakewharton.timber:timber:4.7.1")
 
     // MPAndroidChart
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    implementation (libs.mpandroidchart)
     implementation ("android.arch.lifecycle:extensions:1.1.1")
+
+
 
 }
 
