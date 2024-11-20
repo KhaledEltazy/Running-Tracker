@@ -1,6 +1,28 @@
 <resources>
     <string name="app_name">Running Tracker</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="google_maps_api_key"></string>
+    <string name="google_maps_api_key">ENTER YOUR KEY</string>
+    <string name="welcome">Welcome!</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_weight">Your Weight</string>
+    <string name="Continue">Continue</string>
+    <string name="apply_changes">APPLY CHANGES</string>
+    <string name="sort_by">Sort by</string>
+    <string name="date">DATE</string>
+    <string name="time">TIME</string>
+    <string name="distance">DISTANCE</string>
+    <string name="avgspeed">AVGSPEED</string>
+    <string name="calories">CALORIES</string>
+    <string name="your_run">Your Run</string>
+    <string name="statics">Statics</string>
+    <string name="setting">Setting</string>
+
+    <string-array name="filter_option">
+        <item>Date</item>
+        <item>Distance</item>
+        <item>Running Time</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
+
 </resources>
