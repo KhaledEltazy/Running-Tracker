@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/runFragment">
+
+    <fragment
+        android:id="@+id/runFragment"
+        android:name="com.android.runningtracker.ui.fragments.RunFragment"
+        android:label="RunFragment" >
+        <action
+            android:id="@+id/action_runFragment_to_trackingFragment"
+            app:destination="@id/trackingFragment" />
+        <action
+            android:id="@+id/action_runFragment_to_staticFragment"
+            app:destination="@id/staticFragment" />
+        <action
+            android:id="@+id/action_runFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setupFragment"
+        android:name="com.android.runningtracker.ui.fragments.SetupFragment"
+        android:label="SetupFragment" >
+        <action
+            android:id="@+id/action_setupFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="com.android.runningtracker.ui.fragments.TrackingFragment"
+        android:label="TrackingFragment" >
+        <action
+            android:id="@+id/action_trackingFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/staticFragment"
+        android:name="com.android.runningtracker.ui.fragments.StaticFragment"
+        android:label="StaticFragment" >
+        <action
+            android:id="@+id/action_staticFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.android.runningtracker.ui.fragments.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+    </fragment>
+</navigation>
