@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.runningtracker.R
 import com.android.runningtracker.databinding.ActivityMainBinding
@@ -19,10 +20,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        binding.btnNavView.setupWithNavController(binding.fragmentsContainer.findNavController())
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        binding.fragmentsContainer.findNavController()
-            .addOnDestinationChangedListener{controller,destination,arguments ->
+        binding.btnNavView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener{controller,destination,arguments ->
                 when(destination.id){
                     R.id.settingFragment,R.id.staticFragment,R.id.runFragment ->
                         binding.btnNavView.visibility = View.VISIBLE
