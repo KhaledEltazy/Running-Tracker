@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/runFragment">
+    app:startDestination="@id/setupFragment">
 
     <fragment
         android:id="@+id/runFragment"
@@ -11,12 +11,6 @@
         <action
             android:id="@+id/action_runFragment_to_trackingFragment"
             app:destination="@id/trackingFragment" />
-        <action
-            android:id="@+id/action_runFragment_to_staticFragment"
-            app:destination="@id/staticFragment" />
-        <action
-            android:id="@+id/action_runFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/setupFragment"
@@ -37,17 +31,9 @@
     <fragment
         android:id="@+id/staticFragment"
         android:name="com.android.runningtracker.ui.fragments.StaticFragment"
-        android:label="StaticFragment" >
-        <action
-            android:id="@+id/action_staticFragment_to_runFragment"
-            app:destination="@id/runFragment" />
-    </fragment>
+        android:label="StaticFragment" />
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.android.runningtracker.ui.fragments.SettingFragment"
-        android:label="SettingFragment" >
-        <action
-            android:id="@+id/action_settingFragment_to_runFragment"
-            app:destination="@id/runFragment" />
-    </fragment>
+        android:label="SettingFragment" />
 </navigation>

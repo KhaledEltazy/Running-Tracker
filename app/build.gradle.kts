@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.android.runningtracker"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
