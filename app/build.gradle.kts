@@ -160,7 +160,7 @@ dependencies {
     // MPAndroidChart
     implementation (libs.mpandroidchart)
     implementation ("android.arch.lifecycle:extensions:1.1.1")
-
+    implementation(kotlin("script-runtime"))
 
 
 }

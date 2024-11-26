@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/avgspeed"
+        android:text="@string/ave_speed"
         app:layout_constraintEnd_toStartOf="@+id/tvCalories"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvDistance"
