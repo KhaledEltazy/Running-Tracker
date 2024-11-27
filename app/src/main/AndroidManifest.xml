@@ -30,7 +30,9 @@
         </activity>
 
         <service android:name=".service.TrackingService"
-            android:foregroundServiceType="location"/>
+            android:foregroundServiceType="location"
+            android:enabled="true"
+            android:exported="false"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

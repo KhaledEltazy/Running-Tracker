@@ -4,8 +4,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -54,6 +52,7 @@ class TrackingService : LifecycleService() {
         val notificationManger = getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
 
+        // Creation notification channel only for API 26+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             createNotificationChannel(notificationManger)
         }
@@ -65,38 +64,35 @@ class TrackingService : LifecycleService() {
             .setContentTitle("Running Tracker")
             .setContentText("00:00:00")
             .setContentIntent(getMainActivityPendingIntent())
+            .setPriority(NotificationCompat.PRIORITY_LOW)
 
         startForeground(NOTIFICATION_ID,notificationBuilder.build())
     }
+
+    val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    } else {
+        PendingIntent.FLAG_UPDATE_CURRENT
+    }
+
 
     private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
         this,0,
         Intent(this,MainActivity::class.java).also{
             it.action = ACTION_SHOW_TRACKING_FRAGMENT
-        }, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+        }, flags
     )
 
-   /* private fun getMainActivityPendingIntent(): PendingIntent {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            action = ACTION_SHOW_TRACKING_FRAGMENT
-        }
-        return PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-    }*/
 
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManger : NotificationManager){
         val channel = NotificationChannel(
-            NOTIFICATION_CHANNEL_ID,
-            NOTIFICATION_CHANNEL_NAME,
-            IMPORTANCE_LOW
-        )
+                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_CHANNEL_NAME,
+                IMPORTANCE_LOW
+            )
         notificationManger.createNotificationChannel(channel)
     }
 }

@@ -1,6 +1,7 @@
 package com.android.runningtracker.ui.fragments
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -43,10 +44,15 @@ class TrackingFragment : Fragment() {
     }
 
     private fun sedCommandToService(action :String)=
-        Intent(requireContext(),TrackingService::class.java).also {
-            it.action = action
-            requireContext().startService(it)
+        Intent(requireContext(), TrackingService::class.java).also { intent ->
+            intent.action = action
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requireContext().startForegroundService(intent) // For API 26 and above
+            } else {
+                requireContext().startService(intent) // For below API 26
+            }
         }
+
 
 
     override fun onResume() {
