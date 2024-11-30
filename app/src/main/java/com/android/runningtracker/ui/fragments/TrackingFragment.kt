@@ -20,6 +20,7 @@ import com.android.runningtracker.util.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.android.runningtracker.util.Constants.MAP_ZOOM
 import com.android.runningtracker.util.Constants.POLYLINE_COLOR
 import com.android.runningtracker.util.Constants.POLYLINE_WIDTH
+import com.android.runningtracker.util.TrackingUtility
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
@@ -29,9 +30,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class TrackingFragment : Fragment() {
     private lateinit var binding : FragmentTrackingBinding
     private val viewModel : MainViewModel by viewModels()
+
     private var map : GoogleMap? = null
+
     private var isTracking = false
     private var pathPoint = mutableListOf<polyLine>()
+
+    private var currentTimeMillis = 0L
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,6 +64,7 @@ class TrackingFragment : Fragment() {
     }
 
     //observe of isTracking and pathPoint values (TrackingService)
+    //adding timer
     private fun subscribeToObserves(){
         TrackingService.isTracking.observe(viewLifecycleOwner, Observer {
             updateTracking(it)
@@ -67,6 +73,12 @@ class TrackingFragment : Fragment() {
             pathPoint = it
             addLatestPolyline()
             moveCameraToUser()
+        })
+
+        TrackingService.timeRunInMillis.observe(viewLifecycleOwner, Observer {
+            currentTimeMillis = it
+            var formattedTime = TrackingUtility.getFormattedStopMatchTime(currentTimeMillis,true)
+            binding.tvTimer.text = formattedTime
         })
     }
 
