@@ -73,7 +73,7 @@ class TrackingService : LifecycleService() {
                 //time difference between current time and started one.
                 lapTime = System.currentTimeMillis() - timeStarted
                 //post the new lapTime
-                timeRunInSecond.postValue(timeRun + lapTime)
+                timeRunInMillis.postValue(timeRun + lapTime)
                 if(timeRunInMillis.value!! >= lastSecondTimestamp + 1000L){
                     timeRunInSecond.postValue(timeRunInSecond.value!! +1)
                     lastSecondTimestamp += 1000L

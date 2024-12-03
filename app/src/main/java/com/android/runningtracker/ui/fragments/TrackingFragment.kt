@@ -94,7 +94,7 @@ class TrackingFragment : Fragment() {
     //handling buttons of start and finish
     private fun updateTracking(isTracking : Boolean){
         this.isTracking = isTracking
-        if(isTracking){
+        if(!isTracking){
             binding.btnToggleRun.text = "Start"
             binding.btnFinishRun.visibility = View.VISIBLE
         } else {
