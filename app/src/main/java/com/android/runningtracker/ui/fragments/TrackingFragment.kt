@@ -5,11 +5,16 @@ import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.android.runningtracker.R
 import com.android.runningtracker.databinding.FragmentTrackingBinding
 import com.android.runningtracker.service.TrackingService
@@ -17,6 +22,7 @@ import com.android.runningtracker.service.polyLine
 import com.android.runningtracker.ui.viewmodels.MainViewModel
 import com.android.runningtracker.util.Constants.ACTION_PAUSE_SERVICE
 import com.android.runningtracker.util.Constants.ACTION_START_OR_RESUME_SERVICE
+import com.android.runningtracker.util.Constants.ACTION_STOP_SERVICE
 import com.android.runningtracker.util.Constants.MAP_ZOOM
 import com.android.runningtracker.util.Constants.POLYLINE_COLOR
 import com.android.runningtracker.util.Constants.POLYLINE_WIDTH
@@ -37,11 +43,15 @@ class TrackingFragment : Fragment() {
     private var pathPoint = mutableListOf<polyLine>()
 
     private var currentTimeMillis = 0L
+
+    private var menu : Menu? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_tracking,container,false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -85,6 +95,7 @@ class TrackingFragment : Fragment() {
     //sending start or pause service according to isTracking state
     private fun toggleRun(){
         if(isTracking){
+            menu?.getItem(0)?.isVisible = true
             sendCommandToService(ACTION_PAUSE_SERVICE)
         } else{
             sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
@@ -99,6 +110,7 @@ class TrackingFragment : Fragment() {
             binding.btnFinishRun.visibility = View.VISIBLE
         } else {
             binding.btnToggleRun.text = "Stop"
+            menu?.getItem(0)?.isVisible = true
             binding.btnFinishRun.visibility = View.GONE
         }
     }
@@ -197,5 +209,47 @@ class TrackingFragment : Fragment() {
         binding.mvMap.onSaveInstanceState(outState)
     }
 
+    //Creating menu with single item to cancel run
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.toolbar_tracking_menu,menu)
+        this.menu = menu
+    }
 
+    //showing menu
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        if (currentTimeMillis > 0L){
+            this.menu?.getItem(0)?.isVisible = true
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.miCancelTracking ->
+                showCancelTrackingDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showCancelTrackingDialog(){
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Cancel the Run?")
+            .setMessage("Are you sure to cancel the current run and delete all its data?")
+            .setIcon(R.drawable.baseline_delete_forever_24)
+            .setPositiveButton("Yes"){a,b ->
+                stopRun()
+            }
+            .setNegativeButton("No"){dialogInterface,a ->
+                dialogInterface.cancel()
+
+            }
+            .create()
+        dialog.show()
+    }
+
+    private fun stopRun(){
+        sendCommandToService(ACTION_STOP_SERVICE)
+        findNavController().navigate(R.id.action_trackingFragment_to_runFragment)
+    }
 }

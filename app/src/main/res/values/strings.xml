@@ -17,6 +17,7 @@
     <string name="statics">Statics</string>
     <string name="setting">Setting</string>
     <string name="start">Start</string>
+    <string name="cancel_run">Cancel Run</string>
 
     <string-array name="filter_option">
         <item>Date</item>
