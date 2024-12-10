@@ -17,9 +17,7 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.android.runningtracker.R
-import com.android.runningtracker.ui.MainActivity
 import com.android.runningtracker.util.Constants.ACTION_PAUSE_SERVICE
-import com.android.runningtracker.util.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.android.runningtracker.util.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.android.runningtracker.util.Constants.ACTION_STOP_SERVICE
 import com.android.runningtracker.util.Constants.FASTEST_LOCATION_INTERVAL
@@ -43,8 +41,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-typealias polyLine = MutableList<LatLng>
-typealias polyLines = MutableList<polyLine>
+typealias Polyline = MutableList<LatLng>
+typealias Polylines = MutableList<Polyline>
 
 @AndroidEntryPoint
 class TrackingService : LifecycleService() {
@@ -73,7 +71,7 @@ class TrackingService : LifecycleService() {
     companion object{
         val timeRunInMillis = MutableLiveData<Long>()
         val isTracking = MutableLiveData<Boolean>()
-        val pathPoint = MutableLiveData<polyLines>()
+        val pathPoint = MutableLiveData<Polylines>()
     }
 
     //timerFunction

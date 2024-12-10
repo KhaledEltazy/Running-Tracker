@@ -1,7 +1,10 @@
 package com.android.runningtracker.util
 
 import android.content.Context
+import android.health.connect.datatypes.ExerciseRoute
+import android.location.Location
 import android.os.Build
+import com.android.runningtracker.service.Polyline
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.concurrent.TimeUnit
 
@@ -44,5 +47,25 @@ object TrackingUtility {
                 "${if(minutes <10) "0" else ""}$minutes:"+
                 "${if(seconds <10) "0" else ""}$seconds:"+
                 "${if(milliSeconds <10) "0" else ""}$milliSeconds:"
+    }
+
+    //calculation of run distance
+    fun calculatePolyLineLength(polyline: Polyline) :Float{
+        var distatnce = 0f
+        for (i in 0..polyline.size -2){
+            val pos1 = polyline[i]
+            val pos2 = polyline[i+1]
+
+            val result = FloatArray(1)
+            Location.distanceBetween(
+                pos1.latitude,
+                pos1.longitude,
+                pos2.latitude,
+                pos2.longitude,
+                result
+            )
+            distatnce += result[0]
+        }
+        return distatnce
     }
 }
