@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.runningtracker.R
+import com.android.runningtracker.adapter.RunTrackerAdapter
 import com.android.runningtracker.databinding.FragmentRunBinding
 import com.android.runningtracker.ui.viewmodels.MainViewModel
 import com.android.runningtracker.util.Constants.REQUEST_CODE_LOCATION_PERMISSION
@@ -25,7 +27,10 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class RunFragment : Fragment() , EasyPermissions.PermissionCallbacks {
     private lateinit var binding : FragmentRunBinding
+
     private val viewModel : MainViewModel by viewModels()
+
+    private lateinit var runAdapter : RunTrackerAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,11 +42,16 @@ class RunFragment : Fragment() , EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requestLocationPermissions()
+        setupRecyclerView()
+
+
+
         binding.fabAdding.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
 
-        requestLocationPermissions()
+
     }
 
     @AfterPermissionGranted(REQUEST_CODE_LOCATION_PERMISSION)
@@ -90,5 +100,13 @@ class RunFragment : Fragment() , EasyPermissions.PermissionCallbacks {
         , grantResults: IntArray) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    private fun setupRecyclerView(){
+        binding.rvRun.apply {
+            runAdapter = RunTrackerAdapter()
+            adapter = runAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 }
