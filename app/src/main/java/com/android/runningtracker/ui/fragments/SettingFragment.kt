@@ -32,7 +32,7 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-git 
+
         loadFieldsFromSharedPref()
 
         binding.btnApplyChanges.setOnClickListener {

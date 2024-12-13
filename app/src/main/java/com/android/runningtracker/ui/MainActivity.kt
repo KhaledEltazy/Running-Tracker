@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.btnNavView.setupWithNavController(navController)
+        binding.btnNavView.setOnNavigationItemReselectedListener { /*no operation if you select the same fragment that already shows*/ }
         navigateToTrackingFragmentIfNeeded(intent)
 
         navController.addOnDestinationChangedListener{controller,destination,arguments ->
