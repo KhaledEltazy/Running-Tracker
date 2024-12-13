@@ -20,7 +20,7 @@
         >
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tilYourName"
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="@string/your_name"
@@ -43,7 +43,7 @@ android:layout_marginTop="16dp"
     >
 
 <com.google.android.material.textfield.TextInputEditText
-    android:id="@+id/tilYourWeight"
+    android:id="@+id/etWeight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:hint="@string/your_weight"
