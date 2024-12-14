@@ -20,14 +20,8 @@ class MainViewModel @Inject constructor(
         mainRepository.insertRun(run)
     }
 
-    fun delete(run : Run) = viewModelScope.launch {
-        mainRepository.deleteRun(run)
-    }
-
-    fun deleteAllRunning() = mainRepository.deleteAllRunning()
 
     private val runsSortedByDate = mainRepository.getAllRunSortedByDate()
-    fun runsSortedByDate() = mainRepository.getAllRunSortedByDate()
 
     private val runsSortedByTimeInMillis = mainRepository.getAllRUnSortedByTimeInMillis()
 

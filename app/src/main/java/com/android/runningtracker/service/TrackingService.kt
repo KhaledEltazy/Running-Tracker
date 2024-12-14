@@ -5,7 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -53,6 +53,10 @@ class TrackingService : LifecycleService() {
     @Inject
     lateinit var fusedLocationProviderClient : FusedLocationProviderClient
 
+    @Inject
+    lateinit var baseNotificationBuilder : NotificationCompat.Builder
+
+    lateinit var curNotificationBuilder : NotificationCompat.Builder
 
 
     //implementing timer variables
@@ -63,10 +67,7 @@ class TrackingService : LifecycleService() {
     private var lastSecondTimestamp = 0L
     private val timeRunInSecond = MutableLiveData<Long>()
 
-    @Inject
-    lateinit var baseNotificationBuilder : NotificationCompat.Builder
 
-    lateinit var curNotificationBuilder : NotificationCompat.Builder
 
     companion object{
         val timeRunInMillis = MutableLiveData<Long>()
@@ -166,12 +167,12 @@ class TrackingService : LifecycleService() {
             val pauseIntent = Intent(this, TrackingService::class.java).apply {
                 action = ACTION_PAUSE_SERVICE
             }
-            PendingIntent.getService(this, 1, pauseIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 1, pauseIntent, FLAG_IMMUTABLE)
         } else {
             val resumeIntent = Intent(this, TrackingService::class.java).apply {
                 action = ACTION_START_OR_RESUME_SERVICE
             }
-            PendingIntent.getService(this, 2, resumeIntent, FLAG_UPDATE_CURRENT)
+            PendingIntent.getService(this, 2, resumeIntent, FLAG_IMMUTABLE)
         }
 
         val notificationManager =
@@ -190,7 +191,7 @@ class TrackingService : LifecycleService() {
     }
 
     //checking isTracking -setting interval time - updatingLocationTracking
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "VisibleForTests")
     private fun updateLocationTracking(isTracking : Boolean){
         if(isTracking){
             if(TrackingUtility.hasLocationPermissions(this)){
@@ -204,9 +205,9 @@ class TrackingService : LifecycleService() {
                     locationCallback,
                     Looper.getMainLooper()
                 )
-            } else {
-                fusedLocationProviderClient.removeLocationUpdates(locationCallback)
             }
+        } else {
+            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         }
     }
 

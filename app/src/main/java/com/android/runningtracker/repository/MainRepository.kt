@@ -9,10 +9,6 @@ class MainRepository @Inject constructor(
 ) {
     suspend fun insertRun(run : Run) = runDAO.insert(run)
 
-    suspend fun deleteRun (run : Run) = runDAO.delete(run)
-
-    fun deleteAllRunning () = runDAO.deleteAllRunning()
-
     fun getAllRunSortedByDate() = runDAO.getAllRunSortedByDate()
 
     fun getAllRUnSortedByTimeInMillis() = runDAO.getAllRunSortedByTimeInMillis()
@@ -23,7 +19,6 @@ class MainRepository @Inject constructor(
 
     fun getAllRUnSortedByAveSpeedInKMH() = runDAO.getAllRunSortedByAveSpeedInKMH()
 
-    fun getAllDates() = runDAO.getAllTimestamp()
 
     fun getAllCaloriesBurned() = runDAO.getAllCaloriesBurned()
 

@@ -2,7 +2,6 @@ package com.android.runningtracker.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,8 +12,6 @@ interface RunDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(run : Run)
 
-    @Delete
-    suspend fun delete(run: Run)
 
     @Query("SELECT * FROM running_table ORDER BY timestamp DESC")
     fun getAllRunSortedByDate() : LiveData<List<Run>>
@@ -35,8 +32,6 @@ interface RunDAO {
     @Query("SELECT * FROM running_table ORDER BY caloriesBurned DESC")
     fun getAllRunSortedByCaloriesBurned() : LiveData<List<Run>>
 
-    @Query("DELETE FROM running_table")
-    fun deleteAllRunning()
 
     @Query("SELECT SUM(timeInMillis) FROM running_table")
     fun getAllTimeInMillis() : LiveData<Long>

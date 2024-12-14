@@ -28,10 +28,11 @@ object ServiceModule {
         @ApplicationContext app:Context
     ) = FusedLocationProviderClient(app)
 
+
     val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     } else {
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_IMMUTABLE
     }
 
     //moving to trackingFragment when click on notification
